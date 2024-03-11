@@ -1,5 +1,5 @@
-$(document).ready(function() {
-    $('#registrationForm').submit(function(event) {
+$(document).ready(function () {
+    $('#registrationForm').submit(function (event) {
         event.preventDefault();
 
         var firstName = $('#firstName');
@@ -20,11 +20,12 @@ $(document).ready(function() {
 
         console.log(formData);
         saveFormData(formData);
-        firstName.val()= "";
-        lastName.val() = "";
-        inputage.val()= "";
-        inputroll.val()= "";
-    });
+        firstName.val("");
+        lastName.val("");
+        inputage.val("");
+        inputroll.val("");
+    }
+    );
 
     function saveFormData(formData) {
         var storedFormData = [];
@@ -42,13 +43,13 @@ $(document).ready(function() {
         $('#fetchByRollNoForm').addClass('d-none');
         $('#registrationForm').removeClass('d-none');
     });
-    $('#fetchRecord').click(function() {
+    $('#fetchRecord').click(function () {
         var searchRollNo = $('#searchRollNo').val();
         var storedFormData = JSON.parse(localStorage.getItem(searchRollNo));
 
         if (storedFormData && storedFormData.length > 0) {
             var resultText = 'Record for Roll No ' + searchRollNo + ':\n\n';
-            storedFormData.forEach(function(formData, index) {
+            storedFormData.forEach(function (formData, index) {
                 // resultText += 'Record ' + (index + 1) + ': \n';
                 resultText += 'First Name: ' + formData.firstName + '\n';
                 resultText += 'Last Name: ' + formData.lastName + '\n';
