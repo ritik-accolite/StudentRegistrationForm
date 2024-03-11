@@ -1,34 +1,60 @@
-document.getElementById('registrationForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+$(document).ready(function() {
+    $('#registrationForm').submit(function(event) {
+        event.preventDefault();
 
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const inputroll = document.getElementById('inputroll').value;
-    const inputage = document.getElementById('inputAge').value;
-    var e = document.getElementById("gender");
-    var text = e.options[e.selectedIndex].text;
-    if (document.getElementById('flexRadioDefault1').checked) {
-        value = "Indian";
-      }
-    else{
-        value = 'International';
+        var firstName = $('#firstName').val();
+        var lastName = $('#lastName').val();
+        var inputroll = $('#inputroll').val();
+        var inputage = $('#inputAge').val();
+        var text = $('#gender option:selected').text();
+        var value = $('#flexRadioDefault1').prop('checked') ? 'Indian' : 'International';
+
+        var formData = {
+            firstName: firstName,
+            lastName: lastName,
+            Gender: text,
+            inputage: inputage,
+            inputroll: inputroll,
+            Nationality: value
+        };
+
+        console.log(formData);
+        saveFormData(formData);
+    });
+
+    function saveFormData(formData) {
+        var storedFormData = [];
+
+        storedFormData.push(formData);
+        localStorage.setItem(formData.inputroll, JSON.stringify(storedFormData));
     }
-    const formData = {
-        firstName: firstName,
-        lastName: lastName,
-        Gender: text,
-        inputage: inputage,
-        inputroll: inputroll,
-        Nationality: value,
-    };
-    console.log(formData)
-    saveFormData(formData);
+    $('#fetchByRollNoLink').click(function (event) {
+        event.preventDefault();
+        $('#registrationForm').addClass('d-none');
+        $('#fetchByRollNoForm').removeClass('d-none');
+    });
+
+    $('#register').click(function () {
+        $('#fetchByRollNoForm').addClass('d-none');
+        $('#registrationForm').removeClass('d-none');
+    });
+    $('#fetchRecord').click(function() {
+        var searchRollNo = $('#searchRollNo').val();
+        var storedFormData = JSON.parse(localStorage.getItem(searchRollNo));
+
+        if (storedFormData && storedFormData.length > 0) {
+            var resultText = 'Record for Roll No ' + searchRollNo + ':\n\n';
+            storedFormData.forEach(function(formData, index) {
+                // resultText += 'Record ' + (index + 1) + ': \n';
+                resultText += 'First Name: ' + formData.firstName + '\n';
+                resultText += 'Last Name: ' + formData.lastName + '\n';
+                resultText += 'Gender: ' + formData.Gender + '\n';
+                resultText += 'Age: ' + formData.inputage + '\n';
+                resultText += 'Nationality: ' + formData.Nationality + '\n\n';
+            });
+            alert(resultText);
+        } else {
+            alert('No record found for Roll No ' + searchRollNo);
+        }
+    });
 });
-
-function saveFormData(formData) {
-    const storedFormData = JSON.parse(localStorage.getItem('formData')) || [];
-
-    storedFormData.push(formData);
-
-    localStorage.setItem('formData', JSON.stringify(storedFormData));
-}
