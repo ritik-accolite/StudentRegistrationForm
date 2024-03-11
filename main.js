@@ -20,10 +20,10 @@ $(document).ready(function() {
 
         console.log(formData);
         saveFormData(formData);
-        firstName.val()= "",
-        lastName.val() = "",
-        inputage.val()= "",
-        inputroll.val()= "",
+        firstName.val()= "";
+        lastName.val() = "";
+        inputage.val()= "";
+        inputroll.val()= "";
     });
 
     function saveFormData(formData) {
