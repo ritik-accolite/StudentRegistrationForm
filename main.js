@@ -2,24 +2,28 @@ $(document).ready(function() {
     $('#registrationForm').submit(function(event) {
         event.preventDefault();
 
-        var firstName = $('#firstName').val();
-        var lastName = $('#lastName').val();
-        var inputroll = $('#inputroll').val();
-        var inputage = $('#inputAge').val();
-        var text = $('#gender option:selected').text();
-        var value = $('#flexRadioDefault1').prop('checked') ? 'Indian' : 'International';
+        var firstName = $('#firstName');
+        var lastName = $('#lastName');
+        var inputroll = $('#inputroll');
+        var inputage = $('#inputAge');
+        var text = $('#gender option:selected');
+        var value = $('#flexRadioDefault1');
 
         var formData = {
-            firstName: firstName,
-            lastName: lastName,
-            Gender: text,
-            inputage: inputage,
-            inputroll: inputroll,
-            Nationality: value
+            firstName: firstName.val(),
+            lastName: lastName.val(),
+            Gender: text.text(),
+            inputage: inputage.val(),
+            inputroll: inputroll.val(),
+            Nationality: value.prop('checked') ? 'Indian' : 'International'
         };
 
         console.log(formData);
         saveFormData(formData);
+        firstName.val()= "",
+        lastName.val() = "",
+        inputage.val()= "",
+        inputroll.val()= "",
     });
 
     function saveFormData(formData) {
